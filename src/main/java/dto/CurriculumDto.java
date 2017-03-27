@@ -13,7 +13,26 @@ public class CurriculumDto {
 	private String deg_level;
 	private String curi_area;
 	private String deg_major;
+	private String cl_title;
+	private String cl_SubjCode;
 	private Integer curi_groupnum;
+
+	public String getCl_SubjCode() {
+		return cl_SubjCode;
+	}
+
+	public void setCl_SubjCode(String cl_SubjCode) {
+		this.cl_SubjCode = cl_SubjCode;
+	}
+
+	public String getCl_title() {
+		return cl_title;
+	}
+
+	public CurriculumDto setCl_title(String cl_title) {
+		this.cl_title = cl_title;
+		return this;
+	}
 
 	public Integer getCl_crseno() {
 		return cl_crseno;
