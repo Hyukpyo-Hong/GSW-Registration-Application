@@ -1,0 +1,25 @@
+{
+  "name": "gsw_registration",
+  "version": "1.0.0",
+  "description": "Web service for class registration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hyukpyo-Hong/JavaSwing-GSW-Class-Registration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hyukpyo-Hong/JavaSwing-GSW-Class-Registration/issues"
+  },
+  "homepage": "https://github.com/Hyukpyo-Hong/JavaSwing-GSW-Class-Registration#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0",
+    "pug": "^2.0.0-beta11"
+  }
+}

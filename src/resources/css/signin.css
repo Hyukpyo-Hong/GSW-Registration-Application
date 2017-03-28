@@ -1,0 +1,44 @@
+body {
+    background-image: url(../images/toplogo.jpg);
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: top left;
+        margin: 0;
+    padding: 0;
+}
+.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+.top {
+    padding: 1em;
+    border-bottom: 1px solid gray;
+    clear: both;
+    height:14%;
+}
+
+.bottom {
+    padding: 1em;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    clear: both;
+    text-align: center;
+}
+
+.left {
+
+    float: left;
+    margin: 0;
+    padding: 1em;
+    width:40%;
+    height:40%;
+}
+
+.right {
+    border-left: 1px solid gray;
+    padding: 1em;
+    float: left;
+    width:48%;
+
+
