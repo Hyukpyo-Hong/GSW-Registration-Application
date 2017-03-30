@@ -1,36 +1,58 @@
-body {
-    background-image: url(../images/background.jpg);
-    background-size:     cover;                      /* <------ */
-    background-repeat:   no-repeat;
-    background-position: top left;
-        margin: 0;
-    padding: 0;
-}
-.submit {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 5px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
-.wrapper{
-    float:right
-}
-
-.signin{
-    float: right;
-    margin-top:2%;
-    margin-right: 5%;
-}
-a {
-    text-decoration: none; 
-    color: white; 
-}
-
-.signup{
-    float: right;
-    margin-top:15%;
-}
+                body {
+                    margin: 0;
+                    padding: 0;
+                }
+                
+                .container {
+                    width: 100%;
+                    height: 1000px;
+                    margin: auto;
+                }
+                
+                .top {
+                    background-image: url(../images/toplogo.jpg);
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: top left;
+                    border-bottom: 1px solid gray;
+                    clear: both;
+                    height: 0;
+                    padding-top: 5.461%;
+                    /* (img-height / img-width * container-width) */
+                    /* (71 / 1300 * 100) */
+                }
+                
+                .topcontent {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 55%;
+                    right: 0;
+                    color: white;
+                }
+                
+                .bottom {
+                    overflow: auto;
+                    padding: 1em;
+                    border-top: 1px solid gray;
+                    border-bottom: 1px solid gray;
+                    clear: both;
+                    text-align: center;
+                    height: 20%;
+                }
+                
+                .left {
+                    overflow: auto;
+                    float: left;
+                    width: 44%;
+                    height: 75%;
+                    padding-left: 10px;
+                }
+                
+                .right {
+                    overflow: auto;
+                    border-left: 1px solid gray;
+                    float: left;
+                    width: 55%;
+                    height: 75%;
+                }

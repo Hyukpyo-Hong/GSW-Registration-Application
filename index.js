@@ -15,12 +15,12 @@ app.get('/', (req,res)=>{
     res.render('index')
 })
 
-app.post('/signin', (req,res)=>{
-    res.render('signin')
+app.post('/main', (req,res)=>{
+    res.render('main')
 })
 
 app.post('/signup', (req,res)=>{
-    res.render('signin')
+    res.render('main')
 })
 
 app.get('/findpw', (req,res)=>{
