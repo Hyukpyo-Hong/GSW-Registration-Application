@@ -8,13 +8,19 @@ html
         div.container
             div.top
                 div.topcontent
-                    p Name: Hyukpyo Hong / Major: Computer Science 
-                    p Graduate Course from 2017 / GPA: 
-                    p
-                        select(name='level')
+                    |
+                    p=id                     
+                        | &nbsp;/ Major: 
+                        =major
+                    p=level 
+                        | &nbsp;Course 
+                        | from 
+                        =startyear                         
+                    form(action='/logout' method='post')
+                        select(name='semester')
                             option(value="" disabled selected) Select Semester
                             option(value='2017summer') 2017 Summer
-                            option(value='2017fall') 2017 Fall
+                            option(value='2017fall') 2017 Fall                        
                         input(type='submit' value="Log Out")
             div.left
                 h1 Curriculum

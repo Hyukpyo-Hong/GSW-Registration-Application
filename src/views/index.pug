@@ -8,9 +8,9 @@ html
         div.container
             div.top
                 div.topcontent
-                    form(action='/main' method='post')
+                    form(action='/signin' method='post')
                         p
-                            input(type='text' name='id' placeholder="name@email.com")
+                            input(type='text' name='username' placeholder="name@email.com")
                             input(type='password' name='password' placeholder="password")
                             input(type='submit' value="Sign In")
                         p
@@ -22,25 +22,22 @@ html
                     h1 Sign Up!    
                 form(action='/signup' method='post')
                     p
-                        input(type='text' name='id' placeholder="name@email.com")
+                        input(type='text' name='mem_email' placeholder="name@email.com")
                     p
                         input(type='password' name='password' placeholder="password")
-                        input(type='password' name='password' placeholder="Confirm password")
+                        input(type='password' name='passwordc' placeholder="Confirm password")
                     p
-                        input(type='text' name='Last Name' placeholder="Input your Last Name")
-                        input(type='text' name='First Name' placeholder="Input your First Name")
-                    p
-                        select(name='level')
+                        select(name='deg_level')
                             option(value="" disabled selected) Course Level
                             option(value='Undergraduate') Undergraduate
                             option(value='Graduate') Graduate                                                
-                    
-                        select(name='StartingYear')
+                    p
+                        select(name='mem_startyear')
                             option(value="" disabled selected) Starting Year
                             option(value='2017') 2017
                             option(value='2016') 2016                                                
-                    
-                        select(name='Major')
+                    p
+                        select(name='deg_major')
                             option(value="" disabled selected) Major
                             option(value='ComputerScience') Computer Science
                             option(value='mathmatics') Mathmatics  
