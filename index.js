@@ -91,7 +91,8 @@ passport.use(new LocalStrategy(
     }
 ));
 
-
+//Send email for password Module
+var pwsender = require('./src/model/email');
 
 
 
@@ -162,7 +163,18 @@ app.get('/findpw', (req, res) => {
 
 //Finding password process
 app.post('/findpw', (req, res) => {
-    res.render('findpw')
+    let id = req.body.id;
+    console.log(pwsender.sendEmail(id));
+    res.render('index')
+    /*
+    if (pwsender.sendEmail(id)) {
+        console.log('Your new password sent to ', id);
+        res.render('index')
+    } else {
+        console.log("Error Happen");
+        res.render('index')
+    }
+    */
 })
 
 // Logout

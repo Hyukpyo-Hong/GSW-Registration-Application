@@ -11,7 +11,8 @@ html
                 
             div.right
                 h1 Input your ID(email address)
-                p
-                    input(type='text' name='id' placeholder="name@email.com")
-                p                      
-                    input(type='submit' value="Send password").submit
+                form(action='/findpw' method='post')
+                    p
+                        input(type='text' name='id' placeholder="name@email.com")
+                    p                      
+                        input(type='submit' value="Send password").submit
