@@ -91,7 +91,7 @@ passport.use(new LocalStrategy(
     }
 ));
 
-//Send email for password Module
+//Module for sending new password
 var pwsender = require('./src/model/email');
 
 
@@ -163,18 +163,27 @@ app.get('/findpw', (req, res) => {
 
 //Finding password process
 app.post('/findpw', (req, res) => {
-    let id = req.body.id;
-    console.log(pwsender.sendEmail(id));
-    res.render('index')
-    /*
-    if (pwsender.sendEmail(id)) {
-        console.log('Your new password sent to ', id);
-        res.render('index')
-    } else {
-        console.log("Error Happen");
-        res.render('index')
-    }
-    */
+    var id = req.body.id;
+    pwsender.sendEmail(id).then((result) => {
+        console.log(result);
+        hasher({ password: 'abcd1234' }, function (err, pass, salt, hash) {
+
+            var sql = 'UPDATE MEMBER SET mem_pw=?, salt=? where mem_email=?'
+            var params = [hash, salt, id,];
+            conn.query(sql, params, function (err, results) {
+                if (err) {
+                    console.log(err);
+                    res.status(500);
+                } else {
+                    console.log('Update Database password Sucess');
+                    res.render('findpwsuccess')
+                }
+            });
+        });
+    }).catch((error) => {
+        console.log(error);
+        res.render('findpwfail')
+    })
 })
 
 // Logout

@@ -9,19 +9,19 @@ html
             div.top
                 div.topcontent
                     |
-                    p=id                     
+                    div=id                     
                         | &nbsp;/ Major: 
                         =major
-                    p=level 
+                    div=level 
                         | &nbsp;Course 
                         | from 
                         =startyear                         
-                    form(action='/logout' method='post')
-                        select(name='semester')
-                            option(value="" disabled selected) Select Semester
-                            option(value='2017summer') 2017 Summer
-                            option(value='2017fall') 2017 Fall                        
-                        input(type='submit' value="Log Out")
+                        form(action='/logout' method='post')
+                            select(name='semester')
+                                option(value="" disabled selected) Select Semester
+                                option(value='2017summer') 2017 Summer
+                                option(value='2017fall') 2017 Fall                        
+                            input(type='submit' value="Log Out")
             div.left
                 h1 Curriculum
                 h2 Required core courses (18 hrs)				
