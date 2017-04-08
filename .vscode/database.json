@@ -1,0 +1,11 @@
+{
+	"extension.databases": [
+		{
+			"type": "mysql",
+			"name": "dbms.gswcm.net (mysql)",
+			"host": "dbms.gswcm.net:3306",
+			"user": "hhong",
+			"password": "219590"
+		}
+	]
+}

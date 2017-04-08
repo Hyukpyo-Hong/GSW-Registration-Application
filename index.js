@@ -60,7 +60,7 @@ passport.serializeUser(function (user, done) {
 });
 passport.deserializeUser(function (id, done) {
     console.log('deserializeUser', id);
-    var sql = 'select * from MEMBER where mem_email=?';
+    var sql = 'select * from member where mem_email=?';
     conn.query(sql, [id], (err, results) => {
         if (err) {
             console.log(err);
@@ -73,7 +73,7 @@ passport.deserializeUser(function (id, done) {
 passport.use(new LocalStrategy(
     (username, password, done) => {
         console.log('Enter Strategy ', username)
-        var sql = 'select * from MEMBER where mem_email=?';
+        var sql = 'select * from member where mem_email=?';
         conn.query(sql, [username], (err, results) => {
             if (err) {
                 return done('There is no users');
@@ -91,10 +91,11 @@ passport.use(new LocalStrategy(
     }
 ));
 
-//Module for sending new password
+//Module - sending new password
 var pwsender = require('./src/model/email');
 
-
+//Module - loading schedule from DB
+var schedule = require('./src/model/schedule');
 
 // --------------------------------------------Router Start ---------------------------------------------------------------
 //Initial Page
@@ -115,12 +116,21 @@ app.post('/signin', passport.authenticate(
 // After sucess Sign in
 app.get('/main', (req, res) => {
     if (req.user !== undefined) {
-        res.render('main', {
-            id: req.user.mem_email,
-            major: req.user.deg_major,
-            level: req.user.deg_level,
-            startyear: req.user.mem_startyear,
-        })
+        schedule.getSchedule(conn, 2017, 'summer').then((html) => {
+
+            console.log(html);
+
+            res.render('main', {
+                id: req.user.mem_email,
+                major: req.user.deg_major,
+                level: req.user.deg_level,
+                startyear: req.user.mem_startyear,
+                html: html,
+            });
+        }).catch((error) => {
+            console.log(error);
+            res.render('/')
+        });
     } else {
         res.redirect('/');
     }
@@ -137,7 +147,7 @@ app.post('/signup', (req, res) => {
             deg_major: req.body.deg_major,
             salt: salt,
         };
-        var sql = 'INSERT INTO MEMBER SET ?';
+        var sql = 'INSERT INTO member SET ?';
         conn.query(sql, user, function (err, results) {
             if (err) {
                 console.log(err);
@@ -168,7 +178,7 @@ app.post('/findpw', (req, res) => {
         console.log(result);
         hasher({ password: 'abcd1234' }, function (err, pass, salt, hash) {
 
-            var sql = 'UPDATE MEMBER SET mem_pw=?, salt=? where mem_email=?'
+            var sql = 'UPDATE member SET mem_pw=?, salt=? where mem_email=?'
             var params = [hash, salt, id,];
             conn.query(sql, params, function (err, results) {
                 if (err) {

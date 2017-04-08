@@ -1587,3 +1587,6 @@ insert into course values('WBIT','4601','Customer Relationship Mgnt',3);
 insert into course values('WBIT','4602','IT Seminar',3);
 insert into course values('WGSS','2001','Int Women, Gender, & Sexuality',3);
 insert into course values('WGSS','4000','WGSS Independent Study',3);
+
+-- load schedule
+select * from course_list left join course using (cl_SubjCode, cl_CrseNo) where cl_close!='c' and cl_year=2017 and cl_semester='summer';
