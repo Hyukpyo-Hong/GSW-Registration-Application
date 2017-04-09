@@ -1,34 +1,36 @@
-doctype html
-html
-    head
-        meta(charset='utf-8')
-        title="GSW Class Registration Service"
-        link(href='/css/main.css', rel='stylesheet')
-    body
-        div.container
-            div.top
-                div.topcontent
-                    |
-                    div=id                     
-                        | &nbsp;/ Major: 
-                        =major
-                    div=level 
-                        | &nbsp;Course 
-                        | from 
-                        =startyear                         
-                        form(action='/logout' method='post')
-                            select(name='semester')
-                                option(value="" disabled selected) Select Semester
-                                option(value='2017summer') 2017 Summer
-                                option(value='2017fall') 2017 Fall                        
-                            input(type='submit' value="Log Out")
-            div.left
-                h1 Curriculum
+extends top.pug
+
+block content
+    .container-fluid
+        .row.mainTop
+            .col-md-7
+            .col-md-5 
+                .row                    
+                    .col-md-10.topMember                        
+                        h4
+                            |&nbsp;
+                            =level
+                            |&nbsp;
+                            =major
+                            |&nbsp;course
+                            |&nbsp;from&nbsp;
+                            =startyear
+                    .col-md-2
+                .row                    
+                    .col-md-8.topMember
+                        h4
+                            =id
+                    .col-md-2
+                        form(action='/logout' method='post')                    
+                            button.btn.btn-primary.btn-sm(type='submit') Log Out
+        .row
+            .col-md-4
+                h2 Curriculum
                 h2 Required core courses (18 hrs)				
                 h3  CSCI 5120 Topics in Information Security					
                 h3  CIS 6720 Distributed Web Applications					
                 h3  CSCI 6230 Internetworking Archit & Protocols				 
-                h3  CSCI 6410 Advanced Database Design					
+                h3  CSCI 6410 Advanced Database Design					     
                 h3  CIS 6800 HCI & Interface Dsg					
                 h3  CSCI 6220 Distributed Operating Systems					
                 h3                        
@@ -43,12 +45,10 @@ html
                 h3                       
                 h2  Thesis only (6 cr)					
                 h3  CSCI 7900 Thesis 					
-                h3  CSCI 7900 Thesis 				
-
-
-            div.right
-                div=html                    
-
-            div.bottom
-                h5 Course Description
-        
+                h3  CSCI 7900 Thesis     
+            .col-md-8
+                .row
+                    select.form-contorl(name='yearsemester')                        
+                        option(value='2017S') 2017 Summer
+                        option(value='2016F') 2017 Fall 
+                div!=html  

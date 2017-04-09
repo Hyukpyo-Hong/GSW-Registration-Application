@@ -1,49 +1,74 @@
-doctype html
-html
-    head
-        meta(charset='utf-8')
-        title="GSW Class Registration Service"
-        link(href='/css/index.css', rel='stylesheet')
-    body
-        div.container
-            div.top
-                div.topcontent
-                    form(action='/signin' method='post')
-                        div
-                            input(type='text' name='username' placeholder="name@email.com")
-                            input(type='password' name='password' placeholder="password")
-                            input(type='submit' value="Sign In")
-                        div
-                            a(href="findpw") Forgot Password?
-            div.left
-            div.right                
-                div.content
-                    img(src="../images/surge.png")
-                    h1 Sign Up!    
-                form(action='/signup' method='post')
-                    p
-                        input(type='text' name='mem_email' placeholder="name@email.com")
-                    p
-                        input(type='password' name='password' placeholder="password")
-                        input(type='password' name='passwordc' placeholder="Confirm password")
-                    p
-                        select(name='deg_level')
-                            option(value="" disabled selected) Course Level
-                            option(value='Undergraduate') Undergraduate
-                            option(value='Graduate') Graduate                                                
-                    p
-                        select(name='mem_startyear')
-                            option(value="" disabled selected) Starting Year
-                            option(value='2017') 2017
-                            option(value='2016') 2016                                                
-                    p
-                        select(name='deg_major')
-                            option(value="" disabled selected) Major
-                            option(value='ComputerScience') Computer Science
-                            option(value='mathmatics') Mathmatics  
-                    p                      
-                        input(type='submit' value="Sign Up").submit
-            div.bottom
-                    p CSCI 6410 Adv. Database Design Team Project
-    
+extends top.pug
 
+block content
+    .container-fluid
+        .row.top
+            .col-md-8
+            .col-md-4 
+                .row
+                    form(class="form-inline" action='/signin' method='post')
+                            .form-group                        
+                                input(class="form-control" type="text" name='username' placeholder="name@email.com")
+                                input(class="form-control" type='password' name='password' placeholder="password")                        
+                                button(type="submit" class="btn btn-default") Sign In
+                .row
+                        .col-md-3
+                        .col-md-9
+                            a(href="findpw") Forgot Password?
+        .row
+            .col-md-6.left            
+            .col-md-6.right
+                .row
+                    .col-md-2
+                        img.pull-right.img-circle(src="../images/surge.png" height="100px")
+                    .col-md-10 
+                        h1 
+                            strong Sign Up!                        
+                .row 
+                    form.form-horizontal(action='/signup' method='post')
+                        .row
+                        form-group
+                            label.col-sm-2.control-label Email
+                            .col-sm-10
+                                input.form-control(type='text' name='mem_email' placeholder="name@email.com")
+                        .row
+                        form-group
+                            label.col-sm-2.control-label Password
+                            .col-sm-10
+                                input.form-control(type='password' name='password' placeholder="password")
+                        .row
+                        form-group
+                            label.col-sm-2.control-label Confirm Password
+                            .col-sm-10
+                                input.form-control(type='password' name='passwordconfirm' placeholder="password")
+                        .row
+                        form-group
+                            label.col-sm-2.control-label Degree Level
+                            .col-sm-10
+                                label.radio-inline
+                                    input(type="radio" name="deg_level" id="inlineRadio1" value="Undergraduate")
+                                    p Undergraduate
+                                label.radio-inline
+                                    input(type="radio" name="deg_level" id="inlineRadio1" value="Graduate")
+                                    p Graduate                                                                                              
+                        .row
+                        form-group
+                            label.col-sm-2.control-label Starting Year
+                            .col-sm-10
+                                select.form-contorl(name='mem_startyear')
+                                    option(value="" disabled selected) Starting Year
+                                    option(value='2017') 2017
+                                    option(value='2016') 2016
+                        .row
+                        form-group
+                            label.col-sm-2.control-label Major
+                            .col-sm-10
+                                select(name='deg_major')
+                                    option(value="" disabled selected) Major
+                                    option(value='ComputerScience') Computer Science
+                                    option(value='mathmatics') Mathmatics  
+                        .row
+                        form-group
+                            label.col-sm-2.control-label
+                            .col-sm-10                     
+                                button.btn.btn-primary(type='submit' value="Sign Up") Sign Up

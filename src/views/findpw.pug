@@ -1,15 +1,11 @@
-doctype html
-html
-    head
-        meta(charset='utf-8')
-        title="GSW Class Registration Service"
-        link(href='/css/index.css', rel='stylesheet')
-    body
-        div.container
-            div.top
-            div.left
-                
-            div.right
+extends top.pug
+
+block content
+    .container-fluid
+        .row.top
+        .row
+            .col-md-6.left            
+            .col-md-6.right
                 h1 Input your ID(email address)
                 form(action='/findpw' method='post')
                     p

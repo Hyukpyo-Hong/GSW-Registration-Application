@@ -1,58 +1,93 @@
-                body {
-                    margin: 0;
-                    padding: 0;
-                }
-                
-                .container {
-                    width: 100%;
-                    height: 1000px;
-                    margin: auto;
-                }
-                
-                .top {
-                    background-image: url(../images/toplogo.jpg);
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    background-position: top left;
-                    border-bottom: 1px solid gray;
-                    clear: both;
-                    height: 0;
-                    padding-top: 5.461%;
-                    /* (img-height / img-width * container-width) */
-                    /* (71 / 1300 * 100) */
-                }
-                
-                .topcontent {
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 55%;
-                    right: 0;
-                    color: white;
-                }
-                
-                .bottom {
-                    overflow: auto;
-                    padding: 1em;
-                    border-top: 1px solid gray;
-                    border-bottom: 1px solid gray;
-                    clear: both;
-                    text-align: center;
-                    height: 20%;
-                }
-                
-                .left {
-                    overflow: auto;
-                    float: left;
-                    width: 44%;
-                    height: 75%;
-                    padding-left: 10px;
-                }
-                
-                .right {
-                    overflow: auto;
-                    border-left: 1px solid gray;
-                    float: left;
-                    width: 55%;
-                    height: 75%;
-                }
+.top {
+    background-image: url(../images/toplogo.jpg);
+    background-repeat: no-repeat;
+    background-color: #0a3665;
+    height:71px;
+    padding-top:15px;
+}
+
+.top a {
+    color: whitesmoke;
+    text-decoration: underline;
+}
+.top a:hover,
+.top a:focus {
+    color: grey;
+}
+
+.left {
+    background-image: url(../images/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height:700px;
+}
+
+.right {
+    padding-top:10%;
+}
+
+.mainTop {
+    background-image: url(../images/toplogo.jpg);
+    background-repeat: no-repeat;
+    background-color: #0a3665;
+    height:71px;
+    
+}
+
+.topMember {
+    color:white;
+    text-align: right;
+}
+
+/*
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    height: 1000px;
+    margin: auto;
+}
+
+
+
+.topcontent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 55%;
+    right: 0;
+    color: white;
+}
+
+.bottom {
+    overflow: auto;
+    padding: 1em;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    clear: both;
+    text-align: center;
+    height: 20%;
+}
+
+.left {
+    overflow: auto;
+    float: left;
+    width: 35%;
+    height: 75%;
+    padding-left: 10px;
+}
+
+.right {
+    overflow: auto;
+    border-left: 1px solid gray;
+    float: left;
+    width: 64%;
+    height: 75%;
+}
+
+*/
