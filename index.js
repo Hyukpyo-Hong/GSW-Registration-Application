@@ -54,11 +54,11 @@ var hasher = bkfd2Password();
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
     console.log('SerializeUser func passed', user.mem_email)
     done(null, user.mem_email);
 });
-passport.deserializeUser(function (id, done) {
+passport.deserializeUser((id, done) => {
     console.log('deserializeUser', id);
     var sql = 'select * from member where mem_email=?';
     conn.query(sql, [id], (err, results) => {
@@ -117,9 +117,6 @@ app.post('/signin', passport.authenticate(
 app.get('/main', (req, res) => {
     if (req.user !== undefined) {
         schedule.getSchedule(conn, 2017, 'summer').then((html) => {
-
-            console.log(html);
-
             res.render('main', {
                 id: req.user.mem_email,
                 major: req.user.deg_major,
@@ -197,10 +194,17 @@ app.post('/findpw', (req, res) => {
 })
 
 // Logout
-app.post('/logout', function (req, res) {
+app.post('/logout', (req, res) => {
     req.logout();
     req.session.save(function () {
         res.redirect('/');
+    });
+});
+
+//Receive Jquery Ajax request for new schedule 
+app.post('/updateSchedule', (req, res) => {
+    schedule.getSchedule(conn, req.body.year, req.body.semester).then((html) => {
+        res.send(html);
     });
 });
 

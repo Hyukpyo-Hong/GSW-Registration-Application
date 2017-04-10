@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css">
+
+    <meta charset=utf-8 />
+    <title>JS Bin</title>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
+    <script>
+        var pickedup;
+
+        $(document).ready(function () {
+            $("#sourcetable tbody tr").on("click", function (event) {
+
+                // get back to where it was before if it was selected :
+                if (pickedup != null) {
+                    pickedup.css("background-color", "#ffccff");
+                }
+
+                $("#fillname").val($(this).find("td").eq(1).html());
+                $(this).css("background-color", "red");
+
+                pickedup = $(this);
+            });
+        });  
+    </script>
+</head>
+
+<body>
+    <br />
+    <h3>The source table</h3>
+
+    <table id="sourcetable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Url</th>
+                <th>Country</th>
+                <th>Item</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Name 1</td>
+                <td>url 1</td>
+                <td>Country 1</td>
+                <td>Item 1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Name 2</td>
+                <td>url 2</td>
+                <td>Country 2</td>
+                <td>Item 2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Name 3</td>
+                <td>url 3</td>
+                <td>Country 3</td>
+                <td>Item 3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Name 4</td>
+                <td>url 4</td>
+                <td>Country 4</td>
+                <td>Item 4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Name 5</td>
+                <td>url 5</td>
+                <td>Country 5</td>
+                <td>Item 5</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h3>The field :</h3>
+
+    The field to fill in with second item of a row : <input type="text" id="fillname" value="" />
+</body>
+
+</html>

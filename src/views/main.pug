@@ -7,19 +7,18 @@ block content
             .col-md-5 
                 .row                    
                     .col-md-10.topMember                        
-                        h4
-                            |&nbsp;
+                        h4  
                             =level
-                            |&nbsp;
-                            =major
-                            |&nbsp;course
-                            |&nbsp;from&nbsp;
-                            =startyear
+                            |&nbsp;course of                            
+                            =major                            
                     .col-md-2
                 .row                    
                     .col-md-8.topMember
                         h4
                             =id
+                            |&nbsp;(from&nbsp;
+                            =startyear
+                            |)
                     .col-md-2
                         form(action='/logout' method='post')                    
                             button.btn.btn-primary.btn-sm(type='submit') Log Out
@@ -48,7 +47,22 @@ block content
                 h3  CSCI 7900 Thesis     
             .col-md-8
                 .row
-                    select.form-contorl(name='yearsemester')                        
+                    select.form-contorl#scheduleSeletor(name='yearsemester')                        
                         option(value='2017S') 2017 Summer
-                        option(value='2016F') 2017 Fall 
-                div!=html  
+                        option(value='2017F') 2017 Fall 
+                #schedule!=html  
+
+    // Course Description Modal
+    div(class="modal fade" id="description" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+        div(class="modal-dialog" role="document")
+            div.modal-content
+                div.modal-header
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") X
+                    h4(class="modal-title" id="desc_title") Modal title
+                div.modal-body Course Description will be shown here! 
+                div.modal-footer
+                    button(type="button" class="btn btn-default" data-dismiss="modal") Close
+                    button(type="button" class="btn btn-primary") View FeedBack
+    
+        
