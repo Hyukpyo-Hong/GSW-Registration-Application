@@ -1,7 +1,11 @@
 var serverurl = "http://localhost:4321/";
 
 $(function () {
+    initialize();
+})
 
+
+function initialize() {
     $("#scheduleSeletor").on('change', () => {
         var selected = $("#scheduleSeletor option:selected").val();
         if (selected === '2017S') {
@@ -21,7 +25,7 @@ $(function () {
             url: serverurl + 'updateSchedule',
             success: function (data) {
                 $("#schedule").html(data);
-                location.reload();
+                initialize();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -36,6 +40,5 @@ $(function () {
             $("#desc_title").text(title);
         $("#description").modal();
     });
-
-})
+}
 
