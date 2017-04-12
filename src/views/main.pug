@@ -18,39 +18,30 @@ block content
                             =id
                             |&nbsp;(from&nbsp;
                             =startyear
-                            |)
-                    .col-md-2
-                        form(action='/logout' method='post')                    
+                            |)                            
+                    .col-md-4
+                        form(action='/logout' method='post')                                                
                             button.btn.btn-primary.btn-sm(type='submit') Log Out
+                            
         .row
-            .col-md-4
-                h2 Curriculum
-                h2 Required core courses (18 hrs)				
-                h3  CSCI 5120 Topics in Information Security					
-                h3  CIS 6720 Distributed Web Applications					
-                h3  CSCI 6230 Internetworking Archit & Protocols				 
-                h3  CSCI 6410 Advanced Database Design					     
-                h3  CIS 6800 HCI & Interface Dsg					
-                h3  CSCI 6220 Distributed Operating Systems					
-                h3                        
-                h2  Elective Courses 12hrs or 6hrs w/thesis					
-                h3  CIS 6420  Data Mining					
-                h3  CIS 5310 Decision Support Systems					
-                h3  CSCI 6320 Advanced Software Engineering					
-                h3  CSCI 6821 Advanced Computer Graphics					
-                h3  CSCI 6900 Special Problems in CS					
-                h3  CIS 6900 Special Problems in CIS					
-                h3  CSCI 6930 Internship					
-                h3                       
-                h2  Thesis only (6 cr)					
-                h3  CSCI 7900 Thesis 					
-                h3  CSCI 7900 Thesis     
-            .col-md-8
+            .col-md-4.pre-scrollable.curriculum
+                #curriculum!=curriculum
+            .col-md-8.pre-scrollable
                 .row
-                    select.form-contorl#scheduleSeletor(name='yearsemester')                        
-                        option(value='2017S') 2017 Summer
-                        option(value='2017F') 2017 Fall 
-                #schedule!=html  
+                    .col-md-3                               
+                        select.form-contorl#scheduleSeletor(name='yearsemester')                        
+                            option(value='2017S') 2017 Summer
+                            option(value='2017F') 2017 Fall 
+                    .col-md-4                                                       
+                        input.form-control#quicksearch(type="text" placeholder="Quick Search...")
+                    .col-md-2                                                       
+                        input.form-control#datesearch(type="text" placeholder="Date/Time Search...")                    
+                    .col-md-2                
+                        button.btn.btn-success.btn-sm#scheduleButton My Shcedule
+                    .col-md-2                
+
+                #schedule!=schedule  
+
 
     // Course Description Modal
     div(class="modal fade" id="description" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
@@ -60,9 +51,22 @@ block content
                     button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") X
                     h4(class="modal-title" id="desc_title") Modal title
-                div.modal-body Course Description will be shown here! 
+                div.modal-body This course was developed as an exercise oriented approach to helping students become familiar with computer applications through a hands-on experience. Computer Applications includes document preparation, spreadsheets, databases, and presentation software. The course will also provide an introduction to computers and briefly discuss features of an operating system.
                 div.modal-footer
-                    button(type="button" class="btn btn-default" data-dismiss="modal") Close
-                    button(type="button" class="btn btn-primary") View FeedBack
-    
+                    button(type="button" class="btn btn-success") Already Taken
+                    button(type="button" class="btn btn-primary") Register
+                    //button(type="button" class="btn btn-info") View FeedBack
+                    button(type="button" class="btn btn-danger" data-dismiss="modal") Close
+
+    // My schedule Modal
+    div(class="modal fade" id="myschedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+        div(class="modal-dialog" role="document")
+            div.modal-content
+                div.modal-header
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") X
+                    h4(class="modal-title" id="desc_title") My Schedule
+                div.modal-body Time Table will shon here.
+                div.modal-footer
+                    button(type="button" class="btn btn-danger" data-dismiss="modal") Close
         

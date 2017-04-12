@@ -1,0 +1,18 @@
+. Curriculum Load / BS computer Science, 
+. Register Button
+. Register Limit
+. Schedule Quick Search
+. Schedule Day Search
+. Time Table
+. Input GPA
+. Transcript
+. Add MS computer Science
+. Add BS Mathmatics
+. Description Input
+. Description Link
+. Input FeedBack Button
+. See FeedBack
+. Prerequisite Rule
+
+
+

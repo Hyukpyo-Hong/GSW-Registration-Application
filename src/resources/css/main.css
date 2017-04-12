@@ -1,5 +1,3 @@
-
-
 .top {
     background-image: url(../images/toplogo.jpg);
     background-repeat: no-repeat;
@@ -42,54 +40,33 @@
     text-align: right;
 }
 
-/*
-
-body {
-    margin: 0;
-    padding: 0;
+.pre-scrollable {
+    max-height: 1000px;
+    overflow-y: scroll;
 }
 
-.container {
-    width: 100%;
-    height: 1000px;
-    margin: auto;
+.curriculum{
+    padding-top:50px;
 }
 
+#class_group{
+    background-color: lightskyblue;
+    color:white;
+    font-style: italic;    
+}
 
-
-.topcontent {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 55%;
-    right: 0;
+#area{
+    background-color: navy;
     color: white;
+    font-size: larger;
 }
 
-.bottom {
-    overflow: auto;
-    padding: 1em;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-    clear: both;
-    text-align: center;
-    height: 20%;
+
+#scheduleTable tr[visible='false'],
+.no-result{
+  display:none;
 }
 
-.left {
-    overflow: auto;
-    float: left;
-    width: 35%;
-    height: 75%;
-    padding-left: 10px;
+#scheduleTable tr[visible='true']{
+  display:table-row;
 }
-
-.right {
-    overflow: auto;
-    border-left: 1px solid gray;
-    float: left;
-    width: 64%;
-    height: 75%;
-}
-
-*/

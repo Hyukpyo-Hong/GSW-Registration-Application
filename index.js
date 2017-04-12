@@ -97,6 +97,16 @@ var pwsender = require('./src/model/email');
 //Module - loading schedule from DB
 var schedule = require('./src/model/schedule');
 
+//Module - loading curriculum from DB
+var curriculum = require('./src/model/curriculum');
+
+//Global variable
+var level = "";
+var major = "";
+var year = "";
+var semester = "";
+
+
 // --------------------------------------------Router Start ---------------------------------------------------------------
 //Initial Page
 app.get('/', (req, res) => {
@@ -116,13 +126,20 @@ app.post('/signin', passport.authenticate(
 // After sucess Sign in
 app.get('/main', (req, res) => {
     if (req.user !== undefined) {
-        schedule.getSchedule(conn, 2017, 'summer').then((html) => {
-            res.render('main', {
-                id: req.user.mem_email,
-                major: req.user.deg_major,
-                level: req.user.deg_level,
-                startyear: req.user.mem_startyear,
-                html: html,
+        level = req.user.deg_level;
+        major = req.user.deg_major;
+        startyear = req.user.mem_startyear;
+        semester = "summer";
+        schedule.getSchedule(conn, 2017, semester).then((schedule) => {
+            curriculum.getCurriculum(conn, '2016-2017', level, major).then((curriculum) => { // not clear curriculum year 2017 and 2016-2017
+                res.render('main', {
+                    id: req.user.mem_email,
+                    major: major,
+                    level: level,
+                    startyear: startyear,
+                    schedule: schedule,
+                    curriculum: curriculum,
+                })
             });
         }).catch((error) => {
             console.log(error);
