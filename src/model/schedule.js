@@ -20,26 +20,37 @@ function makeHtml(rows) {
     var html = '';
     html += '<table class="table table-hover" id="scheduleTable">';
     html += '<thead>';
-    html += '<th>PTRM</th>';
-    html += '<th>CRN</th>';
-    html += '<th>SUBJ CRSE</th>';
-    html += '<th>TITLE (Credit Hours)</th>';
-    html += '<th>Avai/<br>Total</th>';
-    html += '<th>DAYS/TIME</th>';
-    html += '<th>LOCATION</th>';
-    html += '<th>Instructor</th>';
+    html += '<th class="text-center">PTRM</th>';
+    html += '<th class="text-center">CRN</th>';
+    html += '<th class="text-center">SUBJ CRSE</th>';
+    html += '<th class="text-center">TITLE (Credit Hours)</th>';
+    html += '<th class="text-center">Avai/<br>Total</th>';
+    html += '<th class="text-center">DAYS/TIME</th>';
+    html += '<th class="text-center">LOCATION</th>';
+    html += '<th class="text-center">Instructor</th>';
     html += '</thead>';
     html += '<tbody>';
     for (var i in rows) {
-        html += '<tr>';
+        if (rows[i].cl_type === 'Online Course') {
+            html += '<tr id="online">';
+        } else if (rows[i].cl_type === 'Hybrid Course') {
+            html += '<tr id="hybrid">';
+        } else {
+            html += '<tr>';
+        }
         html += '<td>' + rows[i].cl_PTRM + '</td>';
         html += '<td>' + rows[i].cl_CRN + '</td>';
         html += '<td>' + rows[i].cl_SubjCode + ' ' + rows[i].cl_CrseNo + '</td>';
-        html += '<td id="title">' + rows[i].cl_Title + " (" + rows[i].cl_CreditHours + ')</td>';
+        html += '<td id="schedule_title">' + rows[i].cl_Title + " (" + rows[i].cl_CreditHours + ')</td>';
         html += '<td>' + rows[i].cl_SeatAvail + '/' + rows[i].cl_TotalSeats + '</td>';
         html += '<td>' + rows[i].cl_Days + ((rows[i].cl_start_time === '00:00:00') ? '' : ' / ' + rows[i].cl_start_time.substring(0, 5) + '-' + rows[i].cl_end_time.substring(0, 5)) + '</td>';
         html += '<td>' + rows[i].cl_Location + '</td>';
         html += '<td>' + rows[i].cl_instructor + '</td>';
+        
+        html += '<input type="hidden" id="schedule_subj" value="' + rows[i].cl_SubjCode + '"\>';
+        html += '<input type="hidden" id="schedule_crse" value="' + rows[i].cl_CrseNo + '"\>';
+        html += '<input type="hidden" id="schedule_crn" value="' + rows[i].cl_CRN + '"\>';
+        html += '<input type="hidden" id="schedule_desc" value="' + rows[i].cl_description + '"\>';
         html += `</tr>`;
     }
     html += `<tr class="warning no-result">
@@ -47,6 +58,6 @@ function makeHtml(rows) {
             </tr>`;
     html += '</tbody>';
     html += '</table>';
-    
+
     return html;
 }

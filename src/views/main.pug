@@ -3,44 +3,64 @@ extends top.pug
 block content
     .container-fluid
         .row.mainTop
-            .col-md-7
-            .col-md-5 
-                .row                    
-                    .col-md-10.topMember                        
-                        h4  
-                            =level
-                            |&nbsp;course of                            
-                            =major                            
-                    .col-md-2
-                .row                    
-                    .col-md-8.topMember
-                        h4
+            .col-md-4
+            .col-md-8 
+                .row  
+                    .col-md-7.topMember
+                        h4.pull-right &nbsp;/&nbsp;                                    
+                            =major
+                        h4#mem_email.pull-right
                             =id
-                            |&nbsp;(from&nbsp;
+                    .col-md-5.pull-right
+                        form.btn-group.pull-right(action='/logout' method='post')                                                
+                            button.btn.btn-primary(type='submit') Log Out
+                        .btn-group.pull-right
+                            button.btn.btn-success#schedule_Button My Schedule
+                            button.btn.btn-info#transcript_Button Transcript                                  
+                .row                    
+                    .col-md-7.topMember
+                        .pull-right
+                            |&nbsp;(
+                            =level                            
+                            |&nbsp;from&nbsp;
                             =startyear
-                            |)                            
-                    .col-md-4
-                        form(action='/logout' method='post')                                                
-                            button.btn.btn-primary.btn-sm(type='submit') Log Out
-                            
+                            |)
+                    .col-md-5.topMember
+                        #current_semester.pull-right
         .row
             .col-md-4.pre-scrollable.curriculum
                 #curriculum!=curriculum
-            .col-md-8.pre-scrollable
+            .col-md-8.pre-scrollable.schedule
                 .row
-                    .col-md-3                               
-                        select.form-contorl#scheduleSeletor(name='yearsemester')                        
-                            option(value='2017S') 2017 Summer
-                            option(value='2017F') 2017 Fall 
+                    .col-md-1                                                       
+                    .col-md-2
+                        .dropdown
+                            button.btn.btn-default.dropdown-toggle(type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true")
+                                |Select Semester
+                                span.caret  
+                            ul.dropdown-menu(aria-labelledby="dropdownMenu1")
+                                li
+                                    a(value="2017S") 2017 Summer
+                                li
+                                    a(value="2017F") 2017 Fall
                     .col-md-4                                                       
                         input.form-control#quicksearch(type="text" placeholder="Quick Search...")
                     .col-md-2                                                       
                         input.form-control#datesearch(type="text" placeholder="Date/Time Search...")                    
-                    .col-md-2                
-                        button.btn.btn-success.btn-sm#scheduleButton My Shcedule
-                    .col-md-2                
-
-                #schedule!=schedule  
+                    .col-md-3
+                        .dropdown
+                            button.btn.btn-default.dropdown-toggle(type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true")
+                                |Class Type
+                                span.caret  
+                            ul.dropdown-menu(aria-labelledby="dropdownMenu1")
+                                li
+                                    a(value="all" ) All
+                                li
+                                    a#online(value="online") Online
+                                li
+                                    a#hybrid(value="hybrid" ) Hybrid
+                .row
+                    #schedule!=schedule  
 
 
     // Course Description Modal
@@ -50,12 +70,46 @@ block content
                 div.modal-header
                     button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") X
-                    h4(class="modal-title" id="desc_title") Modal title
-                div.modal-body This course was developed as an exercise oriented approach to helping students become familiar with computer applications through a hands-on experience. Computer Applications includes document preparation, spreadsheets, databases, and presentation software. The course will also provide an introduction to computers and briefly discuss features of an operating system.
-                div.modal-footer
-                    button(type="button" class="btn btn-success") Already Taken
-                    button(type="button" class="btn btn-primary") Register
+                    h4.modal-title#desc_title Modal title
+                div.modal-body#desc_desc description
+                div.modal-footer 
+                    input#desc_crn(type="hidden")
+                    input#desc_subj(type="hidden")
+                    input#desc_crse(type="hidden")
+                    button(type="button" class="btn btn-success" id="desc_taken") Already Taken
+                    button(type="button" class="btn btn-primary" id="desc_register") Register
                     //button(type="button" class="btn btn-info") View FeedBack
+                    button(type="button" class="btn btn-danger" data-dismiss="modal") Close
+
+    // Already Taken -> Input GPA Modal
+    div(class="modal fade" id="taken" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+        div(class="modal-dialog" role="document")
+            div.modal-content
+                div.modal-header
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") X
+                    h4.modal-title#taken_title
+                    input#taken_subj(type="hidden")
+                    input#taken_crse(type="hidden")
+                div.modal-body
+                    h3 What was your GPA?
+                    label.radio-inline
+                        input(type="radio" name="taken_grade" value="a") 
+                        P A
+                    label.radio-inline
+                        input(type="radio" name="taken_grade" value="b")
+                        P B
+                    label.radio-inline
+                        input(type="radio" name="taken_grade" value="c")
+                        P C
+                    label.radio-inline
+                        input(type="radio" name="taken_grade" value="d")
+                        P D
+                    label.radio-inline
+                        input(type="radio" name="taken_grade" value="f")
+                        P F
+                div.modal-footer
+                    button(type="button" class="btn btn-success" id="taken_save") Save
                     button(type="button" class="btn btn-danger" data-dismiss="modal") Close
 
     // My schedule Modal
@@ -65,8 +119,8 @@ block content
                 div.modal-header
                     button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") X
-                    h4(class="modal-title" id="desc_title") My Schedule
-                div.modal-body Time Table will shon here.
+                    h4(class="modal-title") My Schedule
+                div.modal-body Time Table will shonw here.
                 div.modal-footer
                     button(type="button" class="btn btn-danger" data-dismiss="modal") Close
         

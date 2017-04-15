@@ -129,9 +129,10 @@ app.get('/main', (req, res) => {
         level = req.user.deg_level;
         major = req.user.deg_major;
         startyear = req.user.mem_startyear;
-        semester = "summer";
+        semester = "summer"; //->Why this is required?        
         schedule.getSchedule(conn, 2017, semester).then((schedule) => {
             curriculum.getCurriculum(conn, '2016-2017', level, major).then((curriculum) => { // not clear curriculum year 2017 and 2016-2017
+                if (major === "ComputerScience") major = "Computer Science"; // Temporary solution instead of changing whole DB
                 res.render('main', {
                     id: req.user.mem_email,
                     major: major,
@@ -168,7 +169,6 @@ app.post('/signup', (req, res) => {
                 res.status(500);
             } else {
                 req.login(user, (err) => {
-                    console.log('Login Sucess');
                     req.session.save(() => {
                         res.redirect('/main');
                     })
@@ -218,12 +218,31 @@ app.post('/logout', (req, res) => {
     });
 });
 
-//Receive Jquery Ajax request for new schedule 
+// Ajax request for new schedule 
 app.post('/updateSchedule', (req, res) => {
     schedule.getSchedule(conn, req.body.year, req.body.semester).then((html) => {
         res.send(html);
     });
 });
+
+//Ajax request for saving taken subject
+app.post('/save_taken_subject', (req, res) => {
+    var mem_email = req.body.mem_email;
+    var subj = req.body.subj;
+    var crse = req.body.crse;
+    var grade = req.body.grade;
+    var sql = 'INSERT INTO transcript(mem_email,cl_CrseNo,cl_SubjCode,tran_grade) values(?,?,?,?)';
+    var params = [mem_email, subj, crse, grade];
+    conn.query(sql, params, function (err, results) {
+        if (err) {
+            console.log(err);
+            res.status(500);
+        } else {
+            res.send('Saved '+subj+' '+crse+' with '+grade+' grade.');
+        }
+    });
+});
+
 
 // --------------------------------------------Router End---------------------------------------------------------------
 

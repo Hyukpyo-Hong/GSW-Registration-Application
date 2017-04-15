@@ -1,19 +1,84 @@
-var serverurl = "http://localhost:4321/";
+const serverurl = "http://localhost:4321/";
+//const serverurl = "http://stapps.gswcm.net:4321/"; // for School Testing Server
+var semester = null;
+var year = null;
+var mem_email = null;
 
-$(function () {
+$(document).ready(function () {
+    semester = "summer";
+    year = "2017";
+    mem_email = $("#mem_email").text();
     initialize();
 })
 
-
 function initialize() {
-    $("#scheduleSeletor").on('change', () => {
-        var selected = $("#scheduleSeletor option:selected").val();
+    function set_current_semester() {
+        $("#current_semester").html("Current Page: <strong>" + year + " " + semester.toUpperCase() + "</strong>");
+    }
+    set_current_semester();
+
+    $("#schedule_Button").click(function () {
+        alert("Not Implemented")
+    });
+
+    $("#transcript_Button").click(function () {
+
+    });
+
+    $("#desc_taken").click(function () {
+        var crse = $(this).parents(".modal-footer").find("#desc_crse").attr('value');
+        var subj = $(this).parents(".modal-footer").find("#desc_subj").attr('value');
+        var title = $(this).parents(".modal-content").find("#desc_title").text();
+        $("#description").modal('hide');
+        $("#taken_title").text(subj + ' ' + crse + ' ' + title);
+        $("#taken_subj").val(subj);
+        $("#taken_crse").val(crse);
+        $("#taken").modal();
+    });
+
+    $("#desc_register").click(function () {
+
+    });
+
+    $("#taken_save").click(function () {
+        $("#taken").modal('hide');
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            data: {
+                'mem_email': mem_email,
+                'subj': $("#taken_subj").val(),
+                'crse': $("#taken_crse").val(),
+                'grade': $("#taken input:radio:checked").val(),
+            },
+            url: serverurl + 'save_taken_subject',
+            success: function (result) {
+                console.log(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                $("#schedule").html("Error Happens during loading schedule!");
+            }
+        });
+        $("#taken").modal('hide');
+    });
+
+    //Semester Selector
+    $(".dropdown-menu li a").click(function () {
+        $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+        var selected = $(this).attr('value');
         if (selected === '2017S') {
-            var year = 2017;
-            var semester = 'summer';
+            year = 2017;
+            semester = 'summer';
+            set_current_semester();
         } else if (selected === '2017F') {
-            var year = 2017;
-            var semester = 'fall';
+            year = 2017;
+            semester = 'fall';
+            set_current_semester();
+        } else {
+            alert("Not implemented.")
         }
         $.ajax({
             type: 'POST',
@@ -35,17 +100,24 @@ function initialize() {
         });
     })
 
+    //Modal for curriculum click
     $("#curriculumTable tbody tr").on("click", function (event) {
         var title = $(this).children('#title').text();
-        title += " " +
-            $("#desc_title").text(title);
-        $("#description").modal();
+
     });
 
+    //Modal for class description
     $("#scheduleTable tbody tr").on("click", function (event) {
-        var title = $(this).children('#title').text();
-        title += " " +
-            $("#desc_title").text(title);
+        var title = $(this).find('#schedule_title').text();
+        var desc = $(this).find('#schedule_desc').val();
+        var subj = $(this).find('#schedule_subj').val();
+        var crse = $(this).find('#schedule_crse').val();
+        var crn = $(this).find('#schedule_crn').val();
+        $("#desc_desc").text(desc);
+        $("#desc_title").text(title);
+        $("#desc_subj").val(subj);
+        $("#desc_crse").val(crse);
+        $("#desc_crn").val(crn);
         $("#description").modal();
     });
 
