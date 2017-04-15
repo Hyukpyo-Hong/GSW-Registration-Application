@@ -100,6 +100,8 @@ var schedule = require('./src/model/schedule');
 //Module - loading curriculum from DB
 var curriculum = require('./src/model/curriculum');
 
+var transcript = require('./src/model/transcript');
+
 //Global variable
 var level = "";
 var major = "";
@@ -231,15 +233,29 @@ app.post('/save_taken_subject', (req, res) => {
     var subj = req.body.subj;
     var crse = req.body.crse;
     var grade = req.body.grade;
-    var sql = 'INSERT INTO transcript(mem_email,cl_CrseNo,cl_SubjCode,tran_grade) values(?,?,?,?)';
+    var sql = 'INSERT INTO transcript(mem_email,cl_SubjCode,cl_CrseNo,tran_grade) values(?,?,?,?)';
     var params = [mem_email, subj, crse, grade];
     conn.query(sql, params, function (err, results) {
         if (err) {
             console.log(err);
             res.status(500);
         } else {
-            res.send('Saved '+subj+' '+crse+' with '+grade+' grade.');
+            res.send('Saved ' + subj + ' ' + crse + ' with ' + grade + ' grade.');
         }
+    });
+});
+
+//Ajax request for get transcript
+app.post('/get_transcript', (req, res) => {    
+    transcript.get_transcript(conn, req.body.mem_email).then((html) => {
+        res.send(html);
+    });
+});
+
+//Ajax request for get transcript
+app.post('/transcript_delete', (req, res) => {    
+    transcript.delete_transcript(conn, req.body.mem_email,req.body.subj,req.body.crse).then((html) => {
+        res.send(html);
     });
 });
 

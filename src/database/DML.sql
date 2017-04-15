@@ -917,3 +917,6 @@ select * from course_list left join course using (cl_SubjCode, cl_CrseNo) where 
 
 -- Description for not CS class
 update course set cl_description="Our application doesn't support non-CS curriculum class description now. This is dummy description. This course covers the basic concepts and design issues in the hardware design and computer systems. Block level design issues, data processing unit design, instruction set design, RISC vs. CISC issues, hardwired and microprogrammed control unit design, memory organization, the system bus structure, IO processors and DMA / Interrupts are also discussed. (3-0-3)" where cl_description is null;
+
+-- get transcript
+SELECT * FROM transcript left join course using (cl_SubjCode,cl_CrseNo) where mem_email='test';

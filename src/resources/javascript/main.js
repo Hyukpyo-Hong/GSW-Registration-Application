@@ -11,6 +11,11 @@ $(document).ready(function () {
     initialize();
 })
 
+function reload() {
+
+
+}
+
 function initialize() {
     function set_current_semester() {
         $("#current_semester").html("Current Page: <strong>" + year + " " + semester.toUpperCase() + "</strong>");
@@ -18,11 +23,27 @@ function initialize() {
     set_current_semester();
 
     $("#schedule_Button").click(function () {
-        alert("Not Implemented")
+
     });
 
     $("#transcript_Button").click(function () {
-
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            data: {
+                'mem_email': mem_email,
+            },
+            url: serverurl + 'get_transcript',
+            success: function (result) {
+                $("#transcript_body").html(result);
+                $("#transcript").modal();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                alert("Error Happens. \n", thrownError);
+            }
+        });
     });
 
     $("#desc_taken").click(function () {
@@ -59,7 +80,7 @@ function initialize() {
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
-                $("#schedule").html("Error Happens during loading schedule!");
+                alert("Error Happens. \n", thrownError);
             }
         });
         $("#taken").modal('hide');
@@ -90,7 +111,6 @@ function initialize() {
             url: serverurl + 'updateSchedule',
             success: function (data) {
                 $("#schedule").html(data);
-                initialize();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -107,7 +127,7 @@ function initialize() {
     });
 
     //Modal for class description
-    $("#scheduleTable tbody tr").on("click", function (event) {
+    $('#schedule').delegate('#scheduleTable tbody tr', 'click', function () {
         var title = $(this).find('#schedule_title').text();
         var desc = $(this).find('#schedule_desc').val();
         var subj = $(this).find('#schedule_subj').val();
@@ -167,4 +187,43 @@ function initialize() {
             }
         }
     })
+
+
+    $('#transcript_body').delegate('.transcript_delete', 'click', function () {
+        var mem_email = $(this).attr('mem_email');
+        var subj = $(this).attr('subj');
+        var crse = $(this).attr('crse');
+
+        $("#transcript_delete").find("#tran_mem_email").val(mem_email);
+        $("#transcript_delete").find("#tran_subj").val(subj);
+        $("#transcript_delete").find("#tran_crse").val(crse);
+        $("#transcript_delete").modal();
+    });
+
+    $("#tran_delete").click(function (e) {
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            data: {
+                'mem_email': $(this).siblings("#tran_mem_email").val(),
+                'subj': $(this).siblings("#tran_subj").val(),
+                'crse': $(this).siblings("#tran_crse").val(),
+            },
+            url: serverurl + 'transcript_delete',
+            success: function (data) {
+                $("#transcript_delete").modal('hide');
+                $("#transcript").modal('hide');
+                $("#transcript_Button").click();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                $("#transcript_delete").modal('hide');
+                $("#transcript").modal('hide');
+                alert("Error")
+            }
+        });
+    });
+
 }
+
