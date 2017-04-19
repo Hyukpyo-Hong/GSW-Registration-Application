@@ -11,11 +11,6 @@ $(document).ready(function () {
     initialize();
 })
 
-function reload() {
-
-
-}
-
 function initialize() {
     function set_current_semester() {
         $("#current_semester").html("Current Page: <strong>" + year + " " + semester.toUpperCase() + "</strong>");
@@ -23,7 +18,25 @@ function initialize() {
     set_current_semester();
 
     $("#schedule_Button").click(function () {
-
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            data: {
+                'mem_email': mem_email,
+                'year': year,
+                'semester': semester,
+            },
+            url: serverurl + 'myschedule',
+            success: function (result) {
+                $("#myschedule_body").html(result);
+                $("#myschedule-title").text("My Schedule for "+year+' '+semester);
+                $("#myschedule").modal();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
     });
 
     $("#transcript_Button").click(function () {
@@ -58,7 +71,32 @@ function initialize() {
     });
 
     $("#desc_register").click(function () {
+        var crn = $(this).parents(".modal-footer").find("#desc_crn").attr('value');
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            data: {
+                'mem_email': mem_email,
+                'crn': crn,
+                'year': year,
+                'semester': semester,
 
+
+            },
+            url: serverurl + 'register',
+            success: function (result) {
+                console.log(result);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                alert("Error Happens. \n", thrownError);
+            }
+        });
+
+        $("#description").modal('hide');
+        $("#register").modal();
     });
 
     $("#taken_save").click(function () {
@@ -139,10 +177,6 @@ function initialize() {
         $("#desc_crse").val(crse);
         $("#desc_crn").val(crn);
         $("#description").modal();
-    });
-
-    $("#scheduleButton").on("click", function (event) {
-        $("#myschedule").modal();
     });
 
     $("#quicksearch").keyup(function () {

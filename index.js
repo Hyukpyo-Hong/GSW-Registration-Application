@@ -100,7 +100,14 @@ var schedule = require('./src/model/schedule');
 //Module - loading curriculum from DB
 var curriculum = require('./src/model/curriculum');
 
+//Module - loading transcript from DB
 var transcript = require('./src/model/transcript');
+
+//Module - loading register from DB
+var register = require('./src/model/register');
+
+//Module - loading myschedule from DB
+var myschedule = require('./src/model/myschedule');
 
 //Global variable
 var level = "";
@@ -246,19 +253,42 @@ app.post('/save_taken_subject', (req, res) => {
 });
 
 //Ajax request for get transcript
-app.post('/get_transcript', (req, res) => {    
+app.post('/get_transcript', (req, res) => {
     transcript.get_transcript(conn, req.body.mem_email).then((html) => {
         res.send(html);
     });
 });
 
 //Ajax request for get transcript
-app.post('/transcript_delete', (req, res) => {    
-    transcript.delete_transcript(conn, req.body.mem_email,req.body.subj,req.body.crse).then((html) => {
+app.post('/transcript_delete', (req, res) => {
+    transcript.delete_transcript(conn, req.body.mem_email, req.body.subj, req.body.crse).then((html) => {
         res.send(html);
     });
 });
 
+
+//Ajax request for register
+app.post('/register', (req, res) => {
+    register(conn, req.body.mem_email, req.body.crn, req.body.year, req.body.semester).then((html) => {
+        if (html) {
+            console.log("heel");
+            res.send(html);
+        } else {
+            console.log("Nope");
+        }
+    });
+});
+
+//Ajax request for schedule
+app.post('/myschedule', (req, res) => {
+    myschedule(conn, req.body.mem_email,req.body.year,req.body.semester).then((html) => {
+        if (html) {
+            res.send(html);
+        } else {
+            
+        }
+    });
+});
 
 // --------------------------------------------Router End---------------------------------------------------------------
 

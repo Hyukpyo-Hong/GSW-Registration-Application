@@ -87,7 +87,6 @@ exports.getCurriculum = (connector) => {
 function getArea(area, group) {
     let rows = (filter(totalrows, 'curi_area', area));
     rows = (filter(rows, 'curi_group', group));
-    console.log(rows);
     var html = "<thead><th colspan='3' id='class_group'>" + "↳Select '" + rows[0].cg_credit + "' Credits</th></thead>"
     for (var i in rows) {
         let code = rows[i].cl_SubjCode + ' ' + rows[i].cl_CrseNo;
