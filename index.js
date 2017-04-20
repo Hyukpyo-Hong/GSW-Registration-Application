@@ -269,7 +269,7 @@ app.post('/transcript_delete', (req, res) => {
 
 //Ajax request for register
 app.post('/register', (req, res) => {
-    register(conn, req.body.mem_email, req.body.crn, req.body.year, req.body.semester).then((html) => {
+    register.register(conn, req.body.mem_email, req.body.crn, req.body.year, req.body.semester).then((html) => {
         if (html) {
             console.log("heel");
             res.send(html);
@@ -281,14 +281,23 @@ app.post('/register', (req, res) => {
 
 //Ajax request for schedule
 app.post('/myschedule', (req, res) => {
-    myschedule(conn, req.body.mem_email,req.body.year,req.body.semester).then((html) => {
+    myschedule.register(conn, req.body.mem_email, req.body.year, req.body.semester).then((html) => {
         if (html) {
             res.send(html);
         } else {
-            
+
         }
     });
 });
+
+
+//Ajax request for get schedule delete
+app.post('/schedule_delete', (req, res) => {
+    myschedule.delete(conn, req.body.mem_email, req.body.crn, req.body.year, req.body.semester).then((html) => {
+        res.send(html);
+    });
+});
+
 
 // --------------------------------------------Router End---------------------------------------------------------------
 

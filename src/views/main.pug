@@ -135,8 +135,10 @@ block content
                     h4.modal-title#myschedule-title My Schedule
                 div.modal-body#myschedule_body
                 div.modal-footer
-                    button(type="button" class="btn btn-success" id="register_save") Save Into my Transcript
+                    // button(type="button" class="btn btn-success" id="register_save") Save Into my Transcript
                     button(type="button" class="btn btn-danger" data-dismiss="modal") Close
+                    input#sche_subj(type="hidden")
+                    input#sche_crse(type="hidden")
 
     // Transcript Modal
     div(class="modal" id="transcript" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")

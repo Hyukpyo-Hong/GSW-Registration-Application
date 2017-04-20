@@ -1,5 +1,5 @@
 const serverurl = "http://localhost:4321/";
-//const serverurl = "http://stapps.gswcm.net:4321/"; // for School Testing Server
+//const serverurl = "http://stapps.gswcm.local:4321/"; // for School Testing Server
 var semester = null;
 var year = null;
 var mem_email = null;
@@ -29,7 +29,7 @@ function initialize() {
             url: serverurl + 'myschedule',
             success: function (result) {
                 $("#myschedule_body").html(result);
-                $("#myschedule-title").text("My Schedule for "+year+' '+semester);
+                $("#myschedule-title").text("My Schedule for " + year + ' ' + semester);
                 $("#myschedule").modal();
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -38,6 +38,32 @@ function initialize() {
             }
         });
     });
+
+    $('#myschedule_body').delegate('.myschedule_delete', 'click', function () {
+        var crn = $(this).attr('crn');
+
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            data: {
+                'mem_email': mem_email,
+                'crn': crn,
+                'year': year,
+                'semester': semester,
+            },
+            url: serverurl + 'schedule_delete',
+            success: function (data) {
+                $("#myschedule").modal('hide');
+                $("#schedule_Button").click();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                $("#myschedule").modal('hide');
+            }
+        });
+    });
+
 
     $("#transcript_Button").click(function () {
         $.ajax({

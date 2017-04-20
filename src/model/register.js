@@ -1,4 +1,4 @@
-module.exports = function (conn, mem_email, cl_CRN, cl_year, cl_semester) {
+exports.register = (conn, mem_email, cl_CRN, cl_year, cl_semester) => {
     return new Promise((resolve, reject) => {
         var sql = `INSERT INTO schedule VALUES(?,?,?,?);`
         var params = [mem_email, cl_CRN, cl_year, cl_semester];
@@ -13,3 +13,4 @@ module.exports = function (conn, mem_email, cl_CRN, cl_year, cl_semester) {
         });
     })
 }
+
