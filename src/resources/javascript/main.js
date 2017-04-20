@@ -151,9 +151,8 @@ function initialize() {
     });
 
     //Semester Selector
-    $(".dropdown-menu li a").click(function () {
-        $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
-        var selected = $(this).attr('value');
+    $("#semester").on('change', function () {
+        var selected = $(this).find(":selected").val();
         if (selected === '2017S') {
             year = 2017;
             semester = 'summer';
@@ -162,9 +161,12 @@ function initialize() {
             year = 2017;
             semester = 'fall';
             set_current_semester();
-        } else {
-            alert("Not implemented.")
         }
+        console.log(selected);
+        loadSchedule();
+    })
+
+    function loadSchedule() {
         $.ajax({
             type: 'POST',
             cache: false,
@@ -182,13 +184,7 @@ function initialize() {
                 $("#schedule").html("Error Happens during loading schedule!");
             }
         });
-    })
-
-    //Modal for curriculum click
-    $("#curriculumTable tbody tr").on("click", function (event) {
-        var title = $(this).children('#title').text();
-
-    });
+    }
 
     //Modal for class description
     $('#schedule').delegate('#scheduleTable tbody tr', 'click', function () {
@@ -205,6 +201,7 @@ function initialize() {
         $("#description").modal();
     });
 
+    //Search
     $("#quicksearch").keyup(function () {
         var searchTerm = $("#quicksearch").val();
         var listItem = $('#scheduleTable tbody').children('tr');
@@ -217,11 +214,11 @@ function initialize() {
         });
 
         $("#scheduleTable tbody tr").not(":containsi('" + searchSplit + "')").each(function (e) {
-            $(this).attr('visible', 'false');
+            $(this).attr("style", "display:none");
         });
 
         $("#scheduleTable tbody tr:containsi('" + searchSplit + "')").each(function (e) {
-            $(this).attr('visible', 'true');
+            $(this).attr("style", "display:");
         });
 
         var jobCount = $('#scheduleTable tbody tr[visible="true"]').length;
@@ -247,6 +244,70 @@ function initialize() {
             }
         }
     })
+
+    $("#class_type").on('change', function () {
+        var selected = $(this).find(":selected").val();
+        var type;
+        table = document.getElementById("scheduleTable");
+        tr = table.getElementsByTagName("tr");
+        switch (selected) {
+            case 'online':
+                type = 'online';
+                break;
+            case 'hybrid':
+                type = 'hybrid';
+                break;
+            default:
+                type = 'all';
+        }
+        if (type === 'all') {
+            $(this).removeClass('hybrid');
+            $(this).removeClass('online');
+            $("#reset").click();
+        } else {
+            $(this).addClass(type);
+            for (i = 0; i < tr.length; i++) {
+                var id = tr[i].className;
+                if (id === type) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    });
+
+    $("#reset").click(function () {
+        $("#datesearch").val('');
+        $("#quicksearch").val('');
+        $('#class_type').val('all');
+        $('#class_type').removeClass('hybrid');
+        $('#class_type').removeClass('online');
+        table = document.getElementById("scheduleTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            tr[i].style.display = "";
+        }
+    });
+
+    $(".curriculum_row").click(function () {
+        var input, filter, table, tr, td, i;
+        input = $(this).attr("code");
+        filter = input.toUpperCase();
+        table = document.getElementById("scheduleTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                if (td.id.toUpperCase() === filter) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    })
+
 
 
     $('#transcript_body').delegate('.transcript_delete', 'click', function () {

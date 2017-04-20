@@ -35,18 +35,31 @@ block content
                     .col-md-1    
                         button(type="button" class="btn btn-warning" id="reset") Reset                                                   
                     .col-md-2
-                        select.bootstrap-select.btn.btn-default#semester
-                            option(value="2017S" selected="selected") 2017 Summer
-                            option(value="2017F") 2017 Fall
+                        .dropdown
+                            button.btn.btn-default.dropdown-toggle(type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true")
+                                |Select Semester
+                                span.caret  
+                            ul.dropdown-menu(aria-labelledby="dropdownMenu1")
+                                li
+                                    a(value="2017S") 2017 Summer
+                                li
+                                    a(value="2017F") 2017 Fall
                     .col-md-4                                                       
                         input.form-control#quicksearch(type="text" placeholder="Quick Search...")
                     .col-md-2                                                       
                         input.form-control#datesearch(type="text" placeholder="Date/Time Search...")                    
                     .col-md-3
-                        select.bootstrap-select.btn.btn-default#class_type
-                            option(value="all" selected="selected") All
-                            option.online(value="online") Online
-                            option.hybrid(value="hybrid") Hybrid
+                        .dropdown
+                            button.btn.btn-default.dropdown-toggle(type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true")
+                                |Class Type
+                                span.caret  
+                            ul.dropdown-menu(aria-labelledby="dropdownMenu1")
+                                li
+                                    a(value="all" ) All
+                                li
+                                    a#online(value="online") Online
+                                li
+                                    a#hybrid(value="hybrid" ) Hybrid
                 .row
                     #schedule!=schedule  
 

@@ -73,14 +73,12 @@ For schedule
   display:table-row;
 }
 
-#online{
+.online{
     color:orangered;
 }
-#hybrid{
+.hybrid{
     color:royalblue;
 }
-
-
 
 
 

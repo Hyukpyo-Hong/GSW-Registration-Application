@@ -3,9 +3,9 @@ exports.getCurriculum = (conn, year, level, major) => {
 
     //Current version assume year parameter as 2016-2017.
     if (level === 'Undergraduate' && major === "ComputerScience") {
-        module = require('./under_computerscience')
+        module = require('../curriculum/under_computerscience')
     } else if (level === 'Graduate' && major === "ComputerScience") {
-        module = require('./grad_computerscience')
+        module = require('../curriculum/grad_computerscience')
     }
 
     return module.getCurriculum(conn);
