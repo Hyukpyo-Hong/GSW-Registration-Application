@@ -8,7 +8,7 @@ exports.register = (conn, mem_email, cl_CRN, cl_year, cl_semester) => {
                 reject(err);
             } else {
                 console.log("Register Success.")
-                resolve();
+                resolve('Good');
             }
         });
     })

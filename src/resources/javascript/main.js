@@ -11,11 +11,70 @@ $(document).ready(function () {
     initialize();
 })
 
+function reset() {
+    $("#reset").click();
+}
+
+function coloring() {
+    $.ajax({
+        type: 'POST',
+        cache: false,
+        data: {
+            'mem_email': mem_email,
+        },
+        url: serverurl + 'coloring',
+        success: function (rows) {
+            for (var i in rows) {
+                $("#curriculumTable").find(rows[i]).css("background-color", "DarkGray");
+            }
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+        }
+    });
+}
+
+function decoloring() {
+    $("#curriculumTable").find('.curriculum_row').css("background-color", "white");
+
+}
+function set_current_semester() {
+    $("#current_semester").html("Current Page: <strong>" + year + " " + semester.toUpperCase() + "</strong>");
+}
+
+function register_validate(subj, crse) {
+    $.ajax({
+        type: 'POST',
+        cache: false,
+        data: {
+            'mem_email': mem_email,
+            'subj': subj,
+            'crse': crse,
+        },
+        url: serverurl + 'register_validate',
+        success: function (result) {
+            if (result['state'] === 0) {
+                return true;
+            } else {
+                $("#register_error").find('#register_body').html(result['value']);
+                $("#register_error").modal();
+                return false;
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+        }
+    });
+}
+
+
 function initialize() {
-    function set_current_semester() {
-        $("#current_semester").html("Current Page: <strong>" + year + " " + semester.toUpperCase() + "</strong>");
-    }
-    set_current_semester();
+
+    set_current_semester(); // Display current semester
+    coloring(); // Color on curriculum section
 
     $("#schedule_Button").click(function () {
         $.ajax({
@@ -28,8 +87,8 @@ function initialize() {
             },
             url: serverurl + 'myschedule',
             success: function (result) {
+                $("#myschedule-title").html("My Schedule for <strong id='blue'>"+year+' '+semester.toUpperCase()+'</strong>')
                 $("#myschedule_body").html(result);
-                $("#myschedule-title").text("My Schedule for " + year + ' ' + semester);
                 $("#myschedule").modal();
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -41,7 +100,6 @@ function initialize() {
 
     $('#myschedule_body').delegate('.myschedule_delete', 'click', function () {
         var crn = $(this).attr('crn');
-
         $.ajax({
             type: 'POST',
             cache: false,
@@ -55,6 +113,8 @@ function initialize() {
             success: function (data) {
                 $("#myschedule").modal('hide');
                 $("#schedule_Button").click();
+                decoloring();
+                coloring();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -98,31 +158,51 @@ function initialize() {
 
     $("#desc_register").click(function () {
         var crn = $(this).parents(".modal-footer").find("#desc_crn").attr('value');
+        var subj = $(this).parents(".modal-footer").find("#desc_subj").attr('value');
+        var crse = $(this).parents(".modal-footer").find("#desc_crse").attr('value');
+        var validate = register_validate(subj, crse);
         $.ajax({
             type: 'POST',
             cache: false,
             data: {
                 'mem_email': mem_email,
-                'crn': crn,
-                'year': year,
-                'semester': semester,
-
-
+                'subj': subj,
+                'crse': crse,
             },
-            url: serverurl + 'register',
+            url: serverurl + 'register_validate',
             success: function (result) {
-                console.log(result);
-
+                if (result['state'] === 0) {
+                    $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        data: {
+                            'mem_email': mem_email,
+                            'crn': crn,
+                            'year': year,
+                            'semester': semester,
+                        },
+                        url: serverurl + 'register',
+                        success: function (result) {
+                            var code = '#' + subj + '_' + crse;
+                            $("#curriculumTable").find(code).css("background-color", "DarkGray");
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(thrownError);
+                        }
+                    });
+                } else {
+                    $("#register_error").find('#register_body').html(result['value']);
+                    $("#register_error").modal();
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
-                alert("Error Happens. \n", thrownError);
             }
         });
-
         $("#description").modal('hide');
-        $("#register").modal();
+
     });
 
     $("#taken_save").click(function () {
@@ -139,7 +219,9 @@ function initialize() {
             url: serverurl + 'save_taken_subject',
             success: function (result) {
                 console.log(result);
-
+                var code = '#' + $("#taken_subj").val() + '_' + $("#taken_crse").val();
+                console.log(code);
+                $("#curriculumTable").find(code).css("background-color", "DarkGray");
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -162,7 +244,6 @@ function initialize() {
             semester = 'fall';
             set_current_semester();
         }
-        console.log(selected);
         loadSchedule();
     })
 
@@ -263,7 +344,7 @@ function initialize() {
         if (type === 'all') {
             $(this).removeClass('hybrid');
             $(this).removeClass('online');
-            $("#reset").click();
+            reset();
         } else {
             $(this).addClass(type);
             for (i = 0; i < tr.length; i++) {
@@ -292,7 +373,7 @@ function initialize() {
 
     $(".curriculum_row").click(function () {
         var input, filter, table, tr, td, i;
-        input = $(this).attr("code");
+        input = $(this).attr("id");
         filter = input.toUpperCase();
         table = document.getElementById("scheduleTable");
         tr = table.getElementsByTagName("tr");
@@ -334,6 +415,8 @@ function initialize() {
             success: function (data) {
                 $("#transcript_delete").modal('hide');
                 $("#transcript").modal('hide');
+                decoloring();
+                coloring();
                 $("#transcript_Button").click();
             },
             error: function (xhr, ajaxOptions, thrownError) {

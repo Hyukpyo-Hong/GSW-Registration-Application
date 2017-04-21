@@ -74,7 +74,7 @@ exports.getCurriculum = (connector) => {
                 for (let i = 1; i <= 1; i++) {
                     html += getArea('e2', i);
                 }
-                html += '<thead><th colspan="3" id="area">Free Electives ( 5-6 hrs)</th></thead>'
+                html += '<thead><th colspan="3" id="area" onclick="reset();">Free Electives ( 5-6 hrs)</th></thead>'
                 html += '</tbody>'
                 html += '</table>'
                 resolve(html);
@@ -90,7 +90,7 @@ function getArea(area, group) {
     var html = "<thead><th colspan='3' id='class_group'>" + "↳Select '" + rows[0].cg_credit + "' Credits</th></thead>"
     for (var i in rows) {
         let id = rows[i].cl_SubjCode + '_' + rows[i].cl_CrseNo;
-        html += '<tr class="curriculum_row" code="'+id+'">'
+        html += '<tr class="curriculum_row" id="'+id+'">'
         html += '<td>' + rows[i].cl_SubjCode + ' ' + rows[i].cl_CrseNo + '</td>';
         html += '<td id="title"><strong> ' + rows[i].cl_Title + '</strong> (' + rows[i].cl_CreditHours + ')</td>';
         html += '</tr>'

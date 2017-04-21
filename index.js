@@ -109,6 +109,13 @@ var register = require('./src/model/register');
 //Module - loading myschedule from DB
 var myschedule = require('./src/model/myschedule');
 
+//Module - loading list for coloring
+var coloring = require('./src/model/coloring');
+
+//Module - loading list for coloring
+var validate = require('./src/model/validate');
+
+
 //Global variable
 var level = "";
 var major = "";
@@ -270,11 +277,12 @@ app.post('/transcript_delete', (req, res) => {
 //Ajax request for register
 app.post('/register', (req, res) => {
     register.register(conn, req.body.mem_email, req.body.crn, req.body.year, req.body.semester).then((html) => {
-        if (html) {
-            console.log("heel");
+        if (html === 'Good') {
+            console.log("Register Success");
             res.send(html);
         } else {
-            console.log("Nope");
+            console.log("Register Error");
+
         }
     });
 });
@@ -298,7 +306,19 @@ app.post('/schedule_delete', (req, res) => {
     });
 });
 
+//Ajax request for get list for coloring
+app.post('/coloring', (req, res) => {
+    coloring.getList(conn, req.body.mem_email).then((html) => {
+        res.send(html);
+    });
+});
 
+//Ajax request for get list for coloring
+app.post('/register_validate', (req, res) => {
+    validate.register(conn, req.body.mem_email, req.body.subj, req.body.crse).then((html) => {
+        res.send(html);
+    });
+});
 // --------------------------------------------Router End---------------------------------------------------------------
 
 

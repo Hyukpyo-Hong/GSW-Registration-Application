@@ -55,7 +55,7 @@ function makeHtml(rows) {
         html += `</tr>`;
     }
     html += `<tr class="warning no-result">
-                <td colspan="8"><i class="fa fa-warning"></i> No result</td>
+                <td colspan="8"><i class="fa fa-warning"></i></td>
             </tr>`;
     html += '</tbody>';
     html += '</table>';

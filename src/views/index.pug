@@ -1,6 +1,7 @@
 extends top.pug
 
-block content
+block content   
+    script(src="/javascript/index.js")
     .container-fluid
         .row.top
             .col-md-8
@@ -18,60 +19,66 @@ block content
         .row
             .col-md-6.left            
             .col-md-6.right
-                .col-md-2
-                .col-md-10
+                .col-md-1
+                .col-md-11
                     .row
-                        .col-md-2
+                        .col-md-4
                             img.pull-right.img-circle(src="../images/surge.png" height="100px")
-                        .col-md-10 
+                        .col-md-8
                             h1 
                                 strong Sign Up!                        
+                    .row
+                        .col-md-12.error#red
                     .row 
-                        form.form-horizontal(action='/signup' method='post')
+                        form.form-horizontal#signupform(action='/signup' method='post')
                             .row
                                 form-group
-                                    label.col-sm-2.control-label Email
-                                    .col-sm-6
-                                        input.form-control(type='text' name='mem_email' placeholder="name@email.com")
+                                    label.col-md-4.control-label Email
+                                    .col-md-8
+                                        input.form-control#email(type='text' name='mem_email' placeholder="name@email.com")
                             .row
                                 form-group
-                                    label.col-sm-2.control-label Password
-                                    .col-sm-6
-                                        input.form-control(type='password' name='password' placeholder="password")
+                                    label.col-md-4.control-label Password
+                                    .col-md-8
+                                        input.form-control#pw(type='password' name='password' placeholder="password")
                             .row
                                 form-group
-                                    label.col-sm-2.control-label Confirm Password
-                                    .col-sm-6
-                                        input.form-control(type='password' name='passwordconfirm' placeholder="password")
+                                    label.col-md-4.control-label Confirm Password
+                                    .col-md-8
+                                        input.form-control#cpw(type='password' name='passwordconfirm' placeholder="password")
                             .row
                                 form-group
-                                    label.col-sm-2.control-label Degree Level
-                                    .col-sm-10
-                                        label.radio-inline
-                                            input(type="radio" name="deg_level" id="inlineRadio1" value="Undergraduate")
-                                            p Undergraduate
-                                        label.radio-inline
-                                            input(type="radio" name="deg_level" id="inlineRadio1" value="Graduate")
-                                            p Graduate                                                                                              
+                                    label.col-md-4.control-label Degree Level
+                                    .col-md-8
+                                        select.bootstrap-select.btn.btn-default#degree(name='deg_level')                                        
+                                            option(value="" disabled selected) Level
+                                            option(value='Undergraduate') Undergraduate
+                                            option(value='Graduate') Graduate
                             .row
                                 form-group
-                                    label.col-sm-2.control-label Starting Year
-                                    .col-sm-10
-                                        select.form-contorl(name='mem_startyear')
+                                    label.col-md-4.control-label Starting Year
+                                    .col-md-8
+                                        select.bootstrap-select.btn.btn-default#year(name='mem_startyear')                                        
                                             option(value="" disabled selected) Starting Year
                                             option(value='2017') 2017
                                             option(value='2016') 2016
                             .row
                                 form-group
-                                    label.col-sm-2.control-label Major
-                                    .col-sm-10
-                                        select(name='deg_major')
+                                    label.col-md-4.control-label Major
+                                    .col-md-8
+                                        select.bootstrap-select.btn.btn-default#major(name='deg_major')                                        
                                             option(value="" disabled selected) Major
                                             option(value='ComputerScience') Computer Science
                                             option(value='mathmatics') Mathmatics  
                             .row
                                 form-group
-                                    label.col-sm-2.control-label
-                                    .col-sm-10                     
-                                        button.btn.btn-primary(type='submit' value="Sign Up") Sign Up
+                                    label.col-md-4.control-label
+                                    .col-md-8                     
+                                        .btn.btn-primary#signup Sign Up
+                            .row
+                                br
+                                br
+                                br
+                                strong#blue Current test version supports only Computer Science Undergraduate Account from 2017
+                        
                         
