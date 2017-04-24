@@ -27,7 +27,7 @@ exports.delete_transcript = (conn, mem_email, subj, crse) => {
                         mem_email = ?
                         AND cl_SubjCode = ?
                         AND cl_CrseNo = ?;`
-        var params = [mem_email,subj,crse];
+        var params = [mem_email, subj, crse];
         conn.query(sql, params, function (err, result) {
             if (err) {
                 console.log(err);
@@ -49,7 +49,8 @@ function makeHtml(rows, mem_email) {
     html += '<th class="text-center">SUBJ CRSE</th>';
     html += '<th class="text-center">TITLE (Credit Hours)</th>';
     html += '<th class="text-center">Grade</th>';
-    html += '<th class="text-center"></th>';
+    html += '<th class="text-center">Remove</th>';
+    html += '<th class="text-center">Feedback</th>';
     html += '</thead>';
     html += '<tbody>';
     for (var i in rows) {
@@ -90,10 +91,20 @@ function makeHtml(rows, mem_email) {
         html += mem_email + `"> `;
         html += `<span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>`;
         html += '</button></td>';
+        html += '<td>';
+        html += `<button type="button" class="btn btn-default transcript_feedback" aria-label="Left Align" `;
+        html += `subj="`;
+        html += rows[i].cl_SubjCode + `" `;
+        html += `crse="`;
+        html += rows[i].cl_CrseNo + `" `;
+        html += `mem_email="`;
+        html += mem_email + `"> `;
+        html += `<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>`;
+        html += '</button></td>';
         html += `</tr>`;
     }
-    html += '<tr class="success"><td colspan="4" class="text-right">Total Credit: <strong>' + credit; +'</strong></td></tr>';
-    html += '<tr class="success"><td colspan="4" class="text-right">Overall GPA: <strong>' + (score / credit).toFixed(1); +'</strong></td></tr>';
+    html += '<tr class="primary"><td colspan="5" class="text-right">Total Credit: <strong>' + credit; +'</strong></td></tr>';
+    html += '<tr class="primary"><td colspan="5" class="text-right">Overall GPA: <strong>' + (score / credit).toFixed(1); +'</strong></td></tr>';
     html += '</tbody>';
     html += '</table>';
     return html;

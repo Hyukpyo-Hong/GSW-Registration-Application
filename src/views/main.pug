@@ -67,7 +67,7 @@ block content
                     input#desc_crse(type="hidden")
                     button(type="button" class="btn btn-success" id="desc_taken") Already Taken
                     button(type="button" class="btn btn-primary" id="desc_register") Register
-                    //button(type="button" class="btn btn-info") View FeedBack
+                    button(type="button" class="btn btn-info"  id="view_feedback") View FeedBack
                     button(type="button" class="btn btn-danger" data-dismiss="modal") Close
 
     // register_error modal
@@ -159,3 +159,32 @@ block content
                     input#tran_crse(type="hidden")
                     
         
+    // Feedback
+    div(class="modal" id="feedback_write" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+        div(class="modal-dialog" role="document")
+            div.modal-content
+                div.modal-header
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") X
+                    h4.modal-title#feedback_title
+                div.modal-body
+                    h3 Leave your comments on this class
+                    textarea.form-contorl#feedback_content(rows="5" style="min-width: 100%")
+                div.modal-footer
+                    button(type="button" class="btn btn-success" id="feedback_save") Save
+                    button(type="button" class="btn btn-danger" data-dismiss="modal") Close
+                    input#feedback_mem_email(type="hidden")
+                    input#feedback_subj(type="hidden")
+                    input#feedback_crse(type="hidden")
+
+    // Feedback read
+    div(class="modal" id="feedback_read" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+        div(class="modal-dialog" role="document")
+            div.modal-content
+                div.modal-header
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") X
+                    h4.modal-title#feedback_read_title
+                div.modal-body#feedback_read_body                    
+                div.modal-footer
+                    button(type="button" class="btn btn-danger" data-dismiss="modal") Close

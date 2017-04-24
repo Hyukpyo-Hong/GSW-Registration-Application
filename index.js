@@ -55,11 +55,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser((user, done) => {
-    console.log('SerializeUser func passed', user.mem_email)
     done(null, user.mem_email);
 });
 passport.deserializeUser((id, done) => {
-    console.log('deserializeUser', id);
     var sql = 'select * from member where mem_email=?';
     conn.query(sql, [id], (err, results) => {
         if (err) {
@@ -72,7 +70,6 @@ passport.deserializeUser((id, done) => {
 });
 passport.use(new LocalStrategy(
     (username, password, done) => {
-        console.log('Enter Strategy ', username)
         var sql = 'select * from member where mem_email=?';
         conn.query(sql, [username], (err, results) => {
             if (err) {
@@ -81,8 +78,17 @@ passport.use(new LocalStrategy(
             var user = results[0];
             return hasher({ password: password, salt: user.salt }, (err, pass, salt, hash) => {
                 if (hash === user.mem_pw) {
-                    console.log('Password correct');
+
+                    console.log('\n\n--Password information for App DEMO--\n');
+                    console.log('PBKDF2 (Password-Based Key Derivation Function 2)');
+                    console.log("\nUsername: ", username)
+                    console.log("\npassword: ", password)
+                    console.log('\nHash: ', hash);
+                    console.log('\nSalt: ', user.salt);
+                    console.log('\n--------------------------------\n\n');
+
                     done(null, user);
+                    user.salt
                 } else {
                     done(null, false);
                 }
@@ -112,9 +118,11 @@ var myschedule = require('./src/model/myschedule');
 //Module - loading list for coloring
 var coloring = require('./src/model/coloring');
 
-//Module - loading list for coloring
+//Module - loading list for validate
 var validate = require('./src/model/validate');
 
+//Module - loading list for feedback
+var feedback = require('./src/model/feedback');
 
 //Global variable
 var level = "";
@@ -206,7 +214,7 @@ app.post('/findpw', (req, res) => {
     var id = req.body.id;
     pwsender.sendEmail(id).then((result) => {
         console.log(result);
-        hasher({ password: 'abcd1234' }, function (err, pass, salt, hash) {
+        hasher({ password: 'dkfja3' }, function (err, pass, salt, hash) {
 
             var sql = 'UPDATE member SET mem_pw=?, salt=? where mem_email=?'
             var params = [hash, salt, id,];
@@ -316,6 +324,20 @@ app.post('/coloring', (req, res) => {
 //Ajax request for get list for coloring
 app.post('/register_validate', (req, res) => {
     validate.register(conn, req.body.mem_email, req.body.subj, req.body.crse).then((html) => {
+        res.send(html);
+    });
+});
+
+//Ajax request for feedback
+app.post('/feedback_save', (req, res) => {    
+    feedback.save(conn, req.body.mem_email, req.body.content, req.body.subj, req.body.crse).then((html) => {
+        res.send(html);
+    });
+});
+
+//Ajax request for feedback
+app.post('/feedback_read', (req, res) => {
+    feedback.read(conn, req.body.subj, req.body.crse).then((html) => {
         res.send(html);
     });
 });

@@ -87,7 +87,7 @@ function initialize() {
             },
             url: serverurl + 'myschedule',
             success: function (result) {
-                $("#myschedule-title").html("My Schedule for <strong id='blue'>"+year+' '+semester.toUpperCase()+'</strong>')
+                $("#myschedule-title").html("My Schedule for <strong id='blue'>" + year + ' ' + semester.toUpperCase() + '</strong>')
                 $("#myschedule_body").html(result);
                 $("#myschedule").modal();
             },
@@ -141,6 +141,28 @@ function initialize() {
                 console.log(xhr.status);
                 console.log(thrownError);
                 alert("Error Happens. \n", thrownError);
+            }
+        });
+    });
+
+    $("#view_feedback").click(function () {
+        var subj = $(this).parents(".modal-footer").find("#desc_subj").attr('value');
+        var crse = $(this).parents(".modal-footer").find("#desc_crse").attr('value');
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            data: {
+                'subj': subj,
+                'crse': crse,
+            },
+            url: serverurl + 'feedback_read',
+            success: function (result) {
+                $("#feedback_read").modal();
+                $('#feedback_read_body').html(result);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
             }
         });
     });
@@ -402,6 +424,46 @@ function initialize() {
         $("#transcript_delete").modal();
     });
 
+
+
+
+    $('#transcript_body').delegate('.transcript_feedback', 'click', function () {
+        var mem_email = $(this).attr('mem_email');
+        var subj = $(this).attr('subj');
+        var crse = $(this).attr('crse');
+        $("#feedback_write").find("#feedback_mem_email").val(mem_email);
+        $("#feedback_write").find("#feedback_subj").val(subj);
+        $("#feedback_write").find("#feedback_crse").val(crse);
+        $("#feedback_write").find("#feedback_title").text(subj + ' ' + crse + ' Feedback')
+        $("#feedback_write").modal();
+
+    });
+
+    $("#feedback_save").click(function (e) {
+        $("#feedback_write").modal('hide');
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            data: {
+                'mem_email': $(this).siblings("#feedback_mem_email").val(),
+                'subj': $(this).siblings("#feedback_subj").val(),
+                'crse': $(this).siblings("#feedback_crse").val(),
+                'content': $('#feedback_content').val(),
+            },
+            url: serverurl + 'feedback_save',
+            success: function (data) {
+                $('#feedback_content').val('');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                alert("Error")
+            }
+        });
+
+    });
+
+
     $("#tran_delete").click(function (e) {
         $.ajax({
             type: 'POST',
@@ -430,4 +492,3 @@ function initialize() {
     });
 
 }
-

@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 
 exports.sendEmail = (receiver_address) => {
-
+var newpw = 'dkfja3'
     // create reusable ansporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         service: '"Yahoo"',
@@ -17,7 +17,7 @@ exports.sendEmail = (receiver_address) => {
         from: '"GSW Registration Application" <gswregister@yahoo.com>', // sender address
         to: receiver_address, // list of receivers
         subject: 'GSW_Registration Password Initialize', // Subject line    
-        html: 'Your GSW Register application password reset as <h1>abcd1234</h1>' // html body
+        html: 'Your GSW Register application password reset as <h1>dkfja3</h1>' // html body
     };
     return new Promise(
         function (resolve, reject) {
